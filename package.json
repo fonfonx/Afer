@@ -15,7 +15,9 @@
   "author": "Xavier",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.0.7"
+    "bootstrap": "^3.3.7",
+    "vue": "^2.0.7",
+    "vue-resource": "^1.0.3"
   },
   "devDependencies": {
     "browser-sync": "^2.18.1",

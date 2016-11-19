@@ -7,7 +7,7 @@ gulp.task('browserSync', function() {
     host: '127.0.0.1',
     port: '4000',
     server: {
-      baseDir: 'app',
+      baseDir: '.',
     },
   })
 })
@@ -18,6 +18,7 @@ gulp.task('reload', function() {
 
 gulp.task('watch', function() {
   gulp.watch('app/**/*', ['reload']);
+  gulp.watch('index.html', ['reload'])
 })
 
 gulp.task('server', ['browserSync', 'watch']);
