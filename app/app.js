@@ -45,7 +45,7 @@ var afer = new Vue({
     values: [],
   },
   methods: {
-    getDIVDUR: function() {
+    getData: function() {
       fundValues = [];
       for (fund of funds) {
         const reqURL = baseURL + fund.key + '_data.csv';
