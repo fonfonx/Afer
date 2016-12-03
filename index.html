@@ -12,6 +12,7 @@
       <button type="button" name="button" v-on:click="getData">Fetch funds values</button>
       <div v-for="fund in funds">
         <h2>{{ fund.name }}</h2>
+        <highcharts :options="fund.options" ref="highcharts"></highcharts>
       </div>
     </div>
     <!-- JS Scripts -->
