@@ -9,16 +9,14 @@
     <h1>Afer Funds Summary</h1>
     <div class="afer">
       {{ message }}
+      <button type="button" name="button" v-on:click="getData">Fetch funds values</button>
       <div v-for="fund in funds">
         <h2>{{ fund.name }}</h2>
-
       </div>
-      <button type="button" name="button" v-on:click="getData">Fetch funds values</button>
     </div>
     <!-- JS Scripts -->
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
-    <script src="app/app.js"></script>
-
+    <script src="www/bundle.js"></script>
   </body>
 </html>
