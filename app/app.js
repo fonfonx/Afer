@@ -1,6 +1,5 @@
-window._ = require('lodash');
-
 Vue.use(require('../node_modules/vue-highcharts/dist/vue-highcharts.js'));
+window._ = require('lodash');
 
 const baseURL = 'https://www.afer.asso.fr/amcharts/'
 
@@ -23,6 +22,7 @@ let funds = [
   },
 ]
 
+// Format funds list
 addKeysInFunds = function(funds) {
   for (fund of funds) {
     fund.options = {}
@@ -55,15 +55,21 @@ processCSV = function(data) {
 }
 
 // Format value history to fit the format needed by highcharts
-formatValueHistory = function(valueHistory) {
+formatValueHistory = function(valueHistory, beginDate, endDate) {
   const dates = _
   .chain(valueHistory)
+  .filter(function(obj) {
+    return formatDate(obj.date) >= beginDate && formatDate(obj.date) <= endDate
+  })
   .map(function(obj) {
     return obj.date
   })
   .value();
   const values = _
   .chain(valueHistory)
+  .filter(function(obj) {
+    return formatDate(obj.date) >= beginDate && formatDate(obj.date) <= endDate
+  })
   .map(function(obj) {
     return obj.value
   })
@@ -124,10 +130,11 @@ success = function(fund, response) {
   const valueHistory = processCSV(response.body)
   fund.values = valueHistory
   const nbValuations = valueHistory.length
-  const valueHistoryObject = formatValueHistory(fund.values)
-  fund.options = createHighchartsOptions(fund.name, valueHistoryObject.categories, valueHistoryObject.data)
   fund.beginDate = formatDate(fund.values[0].date)
   fund.endDate = formatDate(fund.values[nbValuations - 2].date)
+
+  const valueHistoryObject = formatValueHistory(fund.values, fund.beginDate, fund.endDate)
+  fund.options = createHighchartsOptions(fund.name, valueHistoryObject.categories, valueHistoryObject.data)
 }
 
 var afer = new Vue({
@@ -135,11 +142,24 @@ var afer = new Vue({
   data: {
     message: 'Hello Afer!',
     funds: funds,
+    globalBeginDate: '',
+    globalEndDate: '',
   },
   mounted:function() {
     this.getData()
   },
   methods: {
+    changeFundDate: function(fund) {
+      const valueHistoryObject = formatValueHistory(fund.values, fund.beginDate, fund.endDate)
+      fund.options = createHighchartsOptions(fund.name, valueHistoryObject.categories, valueHistoryObject.data)
+    },
+    changeGlobalDate: function() {
+      for (fund of funds) {
+        fund.beginDate = this.globalBeginDate
+        fund.endDate = this.globalEndDate
+        this.changeFundDate(fund)
+      }
+    },
     getData: function() {
       for (fund of funds) {
         const reqURL = baseURL + fund.key + '_data.csv';

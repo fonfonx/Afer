@@ -10,13 +10,17 @@
     <div class="afer">
       {{ message }}
       <button type="button" name="button" v-on:click="getData">Fetch funds values</button>
+      <br>
+      <strong>Simulation globale:</strong>
+      du <input type="date" v-model="globalBeginDate" v-on:change="changeGlobalDate">
+      au <input type="date" v-model="globalEndDate" v-on:change="changeGlobalDate">
       <div v-for="fund in funds">
         <h2>{{ fund.name }}</h2>
         <p>
           Simulation du
-          <input type="date" v-model="fund.beginDate">
+          <input type="date" v-model="fund.beginDate" v-on:change="changeFundDate(fund)">
           au
-          <input type="date" v-model="fund.endDate">
+          <input type="date" v-model="fund.endDate" v-on:change="changeFundDate(fund)">
         </p>
         <highcharts :options="fund.options" ref="highcharts"></highcharts>
       </div>
