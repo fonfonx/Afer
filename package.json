@@ -7,8 +7,10 @@
     "test": "test",
     "gulp": "gulp",
     "start": "npm run browserify && gulp server",
-    "browserify": "browserify app/app.js -o www/bundle.js",
-    "toto": "gulp server"
+    "browserify": "browserify app/app.js -o www/bundle.js"
+  },
+  "browser": {
+    "vue": "vue/dist/vue.js"
   },
   "repository": {
     "type": "git",

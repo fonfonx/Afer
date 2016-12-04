@@ -1,5 +1,8 @@
-Vue.use(require('../node_modules/vue-highcharts/dist/vue-highcharts.js'))
-window._ = require('lodash')
+var Vue = require('vue')
+Vue.use(require('vue-resource'))
+Vue.use(require('vue-highcharts'))
+
+var _ = require('lodash')
 var numbro = require('numbro')
 var moment = require('moment')
 
