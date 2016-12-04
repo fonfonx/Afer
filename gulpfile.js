@@ -31,6 +31,7 @@ gulp.task('reload', function() {
 gulp.task('watch', function() {
   gulp.watch('app/**/*', ['browserify']);
   gulp.watch('www/bundle.js', ['reload'])
+  gulp.watch('css/style.css', ['reload'])
   gulp.watch('index.html', ['reload'])
 })
 

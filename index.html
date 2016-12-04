@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8" content="text/html">
-    <title>Afer Summary</title>
+    <meta name="description" content="Résumé des fonds Afer">
+    <meta name="keywords" content="Afer, afer, fonds, funds, graphe, graph, performance, diversifié, actions, obligations, durable, marchés, émergents, euro, amérique, monde, pme">
+    <title>Fonds Afer</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
@@ -17,7 +19,7 @@
         au <input type="date" v-model="globalEndDate" v-on:change="changeGlobalDate" class="form-control">
       </div>
       <div v-for="fund in funds" class="container">
-        <span class="h2">{{ fund.name }}</span>
+        <h2 class="fund-title">{{ fund.name }}</h2>
         <em class="well well-sm perf">Performance: {{ fund.perf }}</em>
         <div class="form-inline input-date">
           Simulation du

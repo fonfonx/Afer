@@ -2,6 +2,10 @@
   padding-bottom: 20px;
 }
 
+.fund-title {
+  display: inline;
+}
+
 .input-date {
   padding: 20px 0;
 }
