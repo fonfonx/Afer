@@ -20,6 +20,8 @@
     "bootstrap": "^3.3.7",
     "highcharts": "^5.0.3",
     "lodash": "^4.17.2",
+    "moment": "^2.17.1",
+    "numbro": "^1.9.3",
     "vue": "^2.0.7",
     "vue-chartist": "^2.0.2",
     "vue-highcharts": "0.0.9",
