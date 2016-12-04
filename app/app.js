@@ -4,28 +4,36 @@ Vue.use(require('../node_modules/vue-highcharts/dist/vue-highcharts.js'));
 
 const baseURL = 'https://www.afer.asso.fr/amcharts/'
 
-const funds = [
+let funds = [
   {
     key: 'DIVDUR',
     name: 'Afer Diversifié Durable',
-    options: {},
   },
   {
     key: 'SFER',
     name: 'Afer Sfer',
-    options: {},
   },
   {
     key: 'ACEURO',
     name: 'Afer Actions Euro',
-    options: {},
   },
   {
     key: 'ACMOND',
     name: 'Afer Actions Monde',
-    options: {},
   },
 ]
+
+addKeysInFunds = function(funds) {
+  for (fund of funds) {
+    fund.options = {}
+    fund.values = []
+    fund.beginDate = ''
+    fund.endDate = ''
+  }
+  return funds
+}
+
+funds = addKeysInFunds(funds)
 
 // Process the CSV file to format it in order to get only the dates and the value of the funds
 processCSV = function(data) {
@@ -107,10 +115,19 @@ createHighchartsOptions = function(fundName, categories, data) {
   return options
 }
 
+formatDate = function(date) {
+  const tab = date.split('-')
+  return tab[2]+'-'+tab[1]+'-'+tab[0]
+}
+
 success = function(fund, response) {
   const valueHistory = processCSV(response.body)
-  const valueHistoryObject = formatValueHistory(valueHistory)
+  fund.values = valueHistory
+  const nbValuations = valueHistory.length
+  const valueHistoryObject = formatValueHistory(fund.values)
   fund.options = createHighchartsOptions(fund.name, valueHistoryObject.categories, valueHistoryObject.data)
+  fund.beginDate = formatDate(fund.values[0].date)
+  fund.endDate = formatDate(fund.values[nbValuations - 2].date)
 }
 
 var afer = new Vue({
@@ -118,6 +135,9 @@ var afer = new Vue({
   data: {
     message: 'Hello Afer!',
     funds: funds,
+  },
+  mounted:function() {
+    this.getData()
   },
   methods: {
     getData: function() {
@@ -135,5 +155,4 @@ var afer = new Vue({
       }
     }
   },
-
 })
