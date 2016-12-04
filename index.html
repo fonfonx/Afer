@@ -3,31 +3,34 @@
   <head>
     <meta charset="utf-8" content="text/html">
     <title>Afer Summary</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
   </head>
 
   <body>
-    <h1>Afer Funds Summary</h1>
+    <h1 class="page-header text-center">Résumé des Fonds Afer</h1>
     <div class="afer">
-      {{ message }}
-      <button type="button" name="button" v-on:click="getData">Fetch funds values</button>
       <br>
-      <strong>Simulation globale:</strong>
-      du <input type="date" v-model="globalBeginDate" v-on:change="changeGlobalDate">
-      au <input type="date" v-model="globalEndDate" v-on:change="changeGlobalDate">
-      <div v-for="fund in funds">
+      <div class="form-inline container text-center">
+        <strong>Simulation globale:</strong>
+        du <input type="date" v-model="globalBeginDate" v-on:change="changeGlobalDate" class="form-control">
+        au <input type="date" v-model="globalEndDate" v-on:change="changeGlobalDate" class="form-control">
+      </div>
+      <div v-for="fund in funds" class="container">
         <h2>{{ fund.name }}</h2>
-        <p>
+        <div class="form-inline">
           Simulation du
-          <input type="date" v-model="fund.beginDate" v-on:change="changeFundDate(fund)">
+          <input type="date" v-model="fund.beginDate" v-on:change="changeFundDate(fund)" class="form-control">
           au
-          <input type="date" v-model="fund.endDate" v-on:change="changeFundDate(fund)">
-        </p>
+          <input type="date" v-model="fund.endDate" v-on:change="changeFundDate(fund)" class="form-control">
+        </div>
         <highcharts :options="fund.options" ref="highcharts"></highcharts>
+        <hr>
       </div>
     </div>
     <!-- JS Scripts -->
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="www/bundle.js"></script>
   </body>
 </html>

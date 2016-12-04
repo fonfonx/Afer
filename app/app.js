@@ -172,7 +172,6 @@ success = function(fund, response) {
 var afer = new Vue({
   el: '.afer',
   data: {
-    message: 'Hello Afer!',
     funds: funds,
     globalBeginDate: '',
     globalEndDate: '',
