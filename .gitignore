@@ -1,3 +1,4 @@
 *.log
 node_modules/
-www/
+frontend/www/
+backend/__pycache__

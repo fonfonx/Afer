@@ -200,7 +200,9 @@ var afer = new Vue({
     },
     getData: function() {
       for (fund of funds) {
-        const reqURL = baseURL + fund.key + '_data.csv'
+        // const reqURL = baseURL + fund.key + '_data.csv'
+        // let us make a request to a server we control
+        const reqURL = 'http://localhost:8000/fund?code=' + fund.key
         this.$http.get(reqURL)
         .then(
           // success callback

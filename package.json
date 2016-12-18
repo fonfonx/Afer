@@ -7,6 +7,7 @@
     "test": "test",
     "gulp": "gulp",
     "start": "npm run browserify && gulp server",
+    "backend": "hug -f backend/data.py",
     "browserify": "browserify frontend/app/app.js -o frontend/www/bundle.js"
   },
   "browser": {
