@@ -7,11 +7,11 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
 gulp.task('browserify', function() {
-  return browserify('./app/app.js')
+  return browserify('./frontend/app/app.js')
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(gulp.dest('./www'));
+    .pipe(gulp.dest('./frontend/www'));
 });
 
 gulp.task('browserSync', function() {
@@ -19,7 +19,7 @@ gulp.task('browserSync', function() {
     host: '127.0.0.1',
     port: '4000',
     server: {
-      baseDir: '.',
+      baseDir: 'frontend',
     },
   })
 })
@@ -29,10 +29,10 @@ gulp.task('reload', function() {
 })
 
 gulp.task('watch', function() {
-  gulp.watch('app/**/*', ['browserify']);
-  gulp.watch('www/bundle.js', ['reload'])
-  gulp.watch('css/style.css', ['reload'])
-  gulp.watch('index.html', ['reload'])
+  gulp.watch('frontend/app/**/*', ['browserify']);
+  gulp.watch('frontend/www/bundle.js', ['reload'])
+  gulp.watch('frontend/css/style.css', ['reload'])
+  gulp.watch('frontend/index.html', ['reload'])
 })
 
 gulp.task('server', ['browserSync', 'watch']);

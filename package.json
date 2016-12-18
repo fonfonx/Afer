@@ -2,12 +2,12 @@
   "name": "afer",
   "version": "1.0.0",
   "description": "",
-  "main": "app/index.html",
+  "main": "frontend/index.html",
   "scripts": {
     "test": "test",
     "gulp": "gulp",
     "start": "npm run browserify && gulp server",
-    "browserify": "browserify app/app.js -o www/bundle.js"
+    "browserify": "browserify frontend/app/app.js -o frontend/www/bundle.js"
   },
   "browser": {
     "vue": "vue/dist/vue.js"
