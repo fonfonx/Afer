@@ -8,60 +8,11 @@ var moment = require('moment')
 
 const baseURL = 'https://www.afer.asso.fr/amcharts/'
 
-let funds = [
-  {
-    key: 'DIVDUR',
-    name: 'Afer Diversifié Durable',
-  },
-  {
-    key: 'SFER',
-    name: 'Afer Sfer',
-  },
-  {
-    key: 'ACEURO',
-    name: 'Afer Actions Euro',
-  },
-  {
-    key: 'ACMOND',
-    name: 'Afer Actions Monde',
-  },
-  {
-    key: 'AMERIQ',
-    name: 'Afer Actions Amérique',
-  },
-  {
-    key: 'EMERGE',
-    name: 'Afer Marchés Emergents',
-  },
-  {
-    key: 'PATRIM',
-    name: 'Afer Patrimoine',
-  },
-  {
-    key: 'ACPME',
-    name: 'Afer Actions PME',
-  },
-  {
-    key: 'CONVER',
-    name: 'Afer Convertibles',
-  },
-  {
-    key: 'MONDEN',
-    name: 'Afer Obligations Monde Entreprises',
-  },
-  {
-    key: 'IMMO',
-    name: 'Afer Immo',
-  },
-  {
-    key: 'AO2017',
-    name: 'Afer Objectif 2017',
-  },
-]
+import { fundsList } from './constants'
 
 // Format funds list
-addKeysInFunds = function(funds) {
-  for (fund of funds) {
+function addKeysInFunds(funds) {
+  for (let fund of funds) {
     fund.options = {}
     fund.values = []
     fund.beginDate = ''
@@ -71,12 +22,12 @@ addKeysInFunds = function(funds) {
   return funds
 }
 
-funds = addKeysInFunds(funds)
+const funds = addKeysInFunds(fundsList)
 
 // Process the CSV file to format it in order to get only the dates and the value of the funds
-processCSV = function(data) {
-  arr = data.split(/;|\r/);
-  valueHistory = arr.reduce(function(acc, current, index, arr) {
+function processCSV(data) {
+  const arr = data.split(/;|\r/);
+  const valueHistory = arr.reduce(function(acc, current, index, arr) {
     if (index % 2 === 0)
     {
       acc.push({
@@ -93,7 +44,7 @@ processCSV = function(data) {
 }
 
 // Format value history to fit the format needed by highcharts
-formatValueHistory = function(valueHistory, beginDate, endDate) {
+function formatValueHistory(valueHistory, beginDate, endDate) {
   const dates = _
   .chain(valueHistory)
   .filter(function(obj) {
@@ -119,7 +70,7 @@ formatValueHistory = function(valueHistory, beginDate, endDate) {
 }
 
 // return an options object that fit the Highcharts format
-createHighchartsOptions = function(fundName, categories, data) {
+function createHighchartsOptions (fundName, categories, data) {
   const options = {
     title: {
       text: 'Evolution de ' + fundName,
@@ -155,20 +106,20 @@ createHighchartsOptions = function(fundName, categories, data) {
   return options
 }
 
-formatDate = function(date) {
+function formatDate(date) {
   const tab = date.split('-')
   return tab[2]+'-'+tab[1]+'-'+tab[0]
 }
 
 // set the options field with respect to the begin and end date and computes the perf
-setOptions = function(fund) {
+function setOptions(fund) {
   const valueHistoryObject = formatValueHistory(fund.values, fund.beginDate, fund.endDate)
   fund.options = createHighchartsOptions(fund.name, valueHistoryObject.categories, valueHistoryObject.data)
   const nbValuations = valueHistoryObject.data.length
   fund.perf = numbro(valueHistoryObject.data[nbValuations - 1] / valueHistoryObject.data[0] - 1).format('0.00%')
 }
 
-success = function(fund, response) {
+function success(fund, response) {
   const valueHistory = processCSV(response.body)
   fund.values = valueHistory
   const nbValuations = valueHistory.length
@@ -192,17 +143,17 @@ var afer = new Vue({
       setOptions(fund)
     },
     changeGlobalDate: function() {
-      for (fund of funds) {
+      for (let fund of funds) {
         fund.beginDate = this.globalBeginDate
         fund.endDate = this.globalEndDate
         this.changeFundDate(fund)
       }
     },
     getData: function() {
-      for (fund of funds) {
-        // const reqURL = baseURL + fund.key + '_data.csv'
+      for (let fund of funds) {
+        const reqURL = baseURL + fund.key + '_data.csv'
         // let us make a request to a server we control
-        const reqURL = 'http://localhost:8000/fund?code=' + fund.key
+        // const reqURL = 'http://localhost:8000/fund?code=' + fund.key
         this.$http.get(reqURL)
         .then(
           // success callback

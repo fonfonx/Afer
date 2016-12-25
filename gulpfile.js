@@ -5,9 +5,11 @@ var browserSync = require('browser-sync');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
+var babelify = require('babelify')
 
 gulp.task('browserify', function() {
   return browserify('./frontend/app/app.js')
+    .transform("babelify", {presets: ["es2015"]})
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
